@@ -27,7 +27,9 @@ class VK:
             'photo_sizes': True
             }
         response = requests.get(url, params)
+        response.raise_for_status()
         result = response.json()
+       
         dict_result = dict.fromkeys(['file_name', 'size'])
         for file in tqdm(result['response']['items']):
             time.sleep(1)
@@ -65,14 +67,17 @@ class YA:
         y.mkdir("/photo_vk")
         for photo in range(1, 6):
             y.upload(f'{photo}.jpg', f'/photo_vk/{photo}.jpg')
-    
-access_token = ''
-user_id = 431223329
-vk = VK(access_token, user_id)
 
-ya_token = ''
-ya = YA(ya_token)
 
-print(vk.get_photo_vk())
-write_json(vk.get_photo_vk())
-ya.add_folder()
+if __name__ == '__main__':
+
+    access_token = ''
+    user_id = 431223329
+    vk = VK(access_token, user_id)
+
+    ya_token = ''
+    ya = YA(ya_token)
+
+    print(vk.get_photo_vk())
+    write_json(vk.get_photo_vk())
+    ya.add_folder()
